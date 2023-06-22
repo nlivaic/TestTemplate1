@@ -1,0 +1,54 @@
+trigger: none
+pr: none
+
+# Pipeline resource defined as per https://bit.ly/3PhwhRk
+resources:
+  pipelines:
+  - pipeline: build_pipeline        # Used to reference the pipeline reference from other parts of the code.
+    source: testtemplate1_build_pipeline  	# This must match  the build pipeline name in ADO.
+                                    # By default, pipelines are named after the ADO build pipeline name.
+    trigger:
+      branches:
+      - master                      # Will get triggered whenever the source pipeline runs on master branch.
+
+jobs:
+- deployment: testtemplate1_deploy_to_appservice
+  displayName: TestTemplate1 Deploy to AppService
+  environment: production
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: PowerShell@2
+          displayName: 'Create version number'
+          name: 'CreateVersionNumber'
+          inputs:
+            targetType: 'inline'
+            script: |
+              $newVersion = "$(resources.pipeline.build_pipeline.runName)"
+              [string] $buildName = "$($newVersion)"
+              Write-Host "##vso[build.updatebuildnumber]$buildName"
+
+        - download: none
+
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Artifact TestTemplate1.Api'
+          inputs:
+            buildType: 'specific'
+            definition: testtemplate1_build_pipeline
+            buildVersionToDownload: 'latest'
+            artifactName: 'drop.TestTemplate1.Api'
+            project: 'TestTemplate1_ADO_Project'
+            downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.Api'
+
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Artifact TestTemplate1.WorkerServices'
+          inputs:
+            buildType: 'specific'
+            definition: testtemplate1_build_pipeline
+            buildVersionToDownload: 'latest'
+            artifactName: 'drop.TestTemplate1.WorkerServices'
+            project: 'DeleteMeAfterYouSetupThosePipelines'
+            downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.WorkerServices'
