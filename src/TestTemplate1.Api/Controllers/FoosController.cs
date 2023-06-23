@@ -58,7 +58,7 @@ namespace TestTemplate1.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<FooGetModel>> PostAsync([FromBody] CreateFooCommand createFooCommand)
         {
-            _logger.LogInformation("logging foofoofoofoo");
+            _logger.LogInformation("logging foofoofoofoo11111111");
             var foo = await _sender.Send(createFooCommand);
             var response = _mapper.Map<FooGetModel>(foo);
             return CreatedAtRoute("GetFoo", new { id = foo.Id }, response);
