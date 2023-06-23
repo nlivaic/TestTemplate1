@@ -89,8 +89,17 @@ stages:
             publishTestResults: true
             configuration: $(buildConfiguration)
         
-        - script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration) ./src/TestTemplate1.Api/TestTemplate1.Api.csproj
+        #- script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration) ./src/TestTemplate1.Api/TestTemplate1.Api.csproj
+        #  displayName: 'dotnet publish TestTemplate1.Api'
+
+        - task: DotNetCoreCLI@2
           displayName: 'dotnet publish TestTemplate1.Api'
+          inputs:
+            command: publish
+            arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration)'
+            workingDirectory: './src/TestTemplate1.Api/'
+            zipAfterPublish: true
+            publishWebProjects: true
         
         - script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices -c $(buildConfiguration) ./src/TestTemplate1.WorkerServices/TestTemplate1.WorkerServices.csproj
           displayName: 'dotnet publish TestTemplate1.WorkerServices'
