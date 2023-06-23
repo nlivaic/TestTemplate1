@@ -88,9 +88,6 @@ stages:
             projects: '**/*.csproj'
             publishTestResults: true
             configuration: $(buildConfiguration)
-        
-        #- script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration) ./src/TestTemplate1.Api/TestTemplate1.Api.csproj
-        #  displayName: 'dotnet publish TestTemplate1.Api'
 
         - task: DotNetCoreCLI@2
           displayName: 'dotnet publish TestTemplate1.Api'
@@ -100,9 +97,15 @@ stages:
             workingDirectory: './src/TestTemplate1.Api/'
             zipAfterPublish: true
             publishWebProjects: true
-        
-        - script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices -c $(buildConfiguration) ./src/TestTemplate1.WorkerServices/TestTemplate1.WorkerServices.csproj
+
+        - task: DotNetCoreCLI@2
           displayName: 'dotnet publish TestTemplate1.WorkerServices'
+          inputs:
+            command: publish
+            arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices -c $(buildConfiguration)'
+            workingDirectory: './src/TestTemplate1.WorkerServices/'
+            zipAfterPublish: true
+            publishWebProjects: true
 
         - task: PublishPipelineArtifact@1
           displayName: 'Publish artifacts TestTemplate1.Api'
