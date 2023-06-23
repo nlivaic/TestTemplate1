@@ -50,5 +50,5 @@ jobs:
             definition: testtemplate1_build_pipeline
             buildVersionToDownload: 'latest'
             artifactName: 'drop.TestTemplate1.WorkerServices'
-            project: 'DeleteMeAfterYouSetupThosePipelines'
+            project: 'TestTemplate1_ADO_Project'
             downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.WorkerServices'
