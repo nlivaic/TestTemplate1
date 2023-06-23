@@ -60,5 +60,5 @@ jobs:
             appType: 'webAppLinux'
             appName: 'wetest1web'
             resourceGroupName: 'WE-TEST1-ASP1'
-            package: '$(Pipeline.Workspace)/drop/TestTemplate1.Api/*.zip'
+            package: '$(Pipeline.Workspace)/drop/TestTemplate1.Api/**/*.zip'
             runtimeStack: 'DOTNETCORE|6.0'
