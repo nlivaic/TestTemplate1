@@ -113,6 +113,7 @@ stages:
             command: publish
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations -c $(buildConfiguration)'
             workingDirectory: './src/TestTemplate1.Migrations/'
+            zipAfterPublish: false
             publishWebProjects: false
 
         - task: PublishPipelineArtifact@1
