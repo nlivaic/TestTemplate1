@@ -53,7 +53,7 @@ jobs:
             project: 'TestTemplate1_ADO_Project'
             downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.WorkerServices'
 
-        - script: ls -al $(Pipeline.Workspace)/drop/TestTemplate1.Api
+        - script: echo $DB_USER
 
         - task: AzureWebApp@1
           displayName: 'Deploy TestTemplate1.Api to App Service'
