@@ -129,5 +129,9 @@ stages:
             artifactName: 'drop.TestTemplate1.WorkerServices'
             publishLocation: pipeline
 
-        - script: dotnet publish -o $(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations -c $(buildConfiguration) ./src/TestTemplate1.Migrations/TestTemplate1.Migrations.csproj
-          displayName: 'dotnet publish TestTemplate1.Migrations'
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish artifacts TestTemplate1.Migrations'
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations'
+            artifactName: 'drop.TestTemplate1.Migrations'
+            publishLocation: pipeline
