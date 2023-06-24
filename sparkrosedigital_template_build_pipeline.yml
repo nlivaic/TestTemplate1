@@ -96,7 +96,7 @@ stages:
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration)'
             workingDirectory: './src/TestTemplate1.Api/'
             zipAfterPublish: true
-            publishWebProjects: true
+            publishWebProjects: false
 
         - task: DotNetCoreCLI@2
           displayName: 'dotnet publish TestTemplate1.WorkerServices'
@@ -105,7 +105,7 @@ stages:
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices -c $(buildConfiguration)'
             workingDirectory: './src/TestTemplate1.WorkerServices/'
             zipAfterPublish: true
-            publishWebProjects: true
+            publishWebProjects: false
 
         - task: DotNetCoreCLI@2
           displayName: 'dotnet publish TestTemplate1.Migrations'
@@ -113,7 +113,7 @@ stages:
             command: publish
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations -c $(buildConfiguration)'
             workingDirectory: './src/TestTemplate1.Migrations/'
-            publishWebProjects: true
+            publishWebProjects: false
 
         - task: PublishPipelineArtifact@1
           displayName: 'Publish artifacts TestTemplate1.Migrations'
