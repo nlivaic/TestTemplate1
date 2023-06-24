@@ -94,7 +94,7 @@ stages:
           inputs:
             command: publish
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Api -c $(buildConfiguration)'
-            workingDirectory: '$(solutiondir)/src/TestTemplate1.Api/'
+            workingDirectory: './src/TestTemplate1.Api/'
             zipAfterPublish: true
             publishWebProjects: true
 
@@ -103,7 +103,7 @@ stages:
           inputs:
             command: publish
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices -c $(buildConfiguration)'
-            workingDirectory: '$(solutiondir)/src/TestTemplate1.WorkerServices/'
+            workingDirectory: './src/TestTemplate1.WorkerServices/'
             zipAfterPublish: true
             publishWebProjects: true
 
@@ -112,7 +112,7 @@ stages:
           inputs:
             command: publish
             arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations -c $(buildConfiguration)'
-            workingDirectory: '$(solutiondir)/src/TestTemplate1.Migrations/'
+            workingDirectory: './src/TestTemplate1.Migrations/'
             publishWebProjects: true
 
         - task: PublishPipelineArtifact@1
