@@ -107,6 +107,14 @@ stages:
             zipAfterPublish: true
             publishWebProjects: true
 
+        - task: DotNetCoreCLI@2
+          displayName: 'dotnet publish TestTemplate1.Migrations'
+          inputs:
+            command: publish
+            arguments: '-o $(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations -c $(buildConfiguration)'
+            workingDirectory: './src/TestTemplate1.Migrations/'
+            publishWebProjects: true
+
         - task: PublishPipelineArtifact@1
           displayName: 'Publish artifacts TestTemplate1.Api'
           inputs:
@@ -119,4 +127,11 @@ stages:
           inputs:
             targetPath: '$(Build.ArtifactStagingDirectory)/TestTemplate1.WorkerServices'
             artifactName: 'drop.TestTemplate1.WorkerServices'
+            publishLocation: pipeline
+
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish artifacts TestTemplate1.Migrations'
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)/TestTemplate1.Migrations'
+            artifactName: 'drop.TestTemplate1.Migrations'
             publishLocation: pipeline
