@@ -68,7 +68,7 @@ jobs:
         - script: echo $(DB_USER)
         - script: echo $(DB_PASSWORD)
 
-        - script: dotnet $(Pipeline.Workspace)/drop/TestTemplate1.Migrations/TestTemplate1.Migrations.dll $(ConnectionStrings.TestTemplate1Db_Migrations_Connection) $(DB_USER) $(DB_PASSWORD)
+        - script: dotnet $(Pipeline.Workspace)/drop/TestTemplate1.Migrations/TestTemplate1.Migrations.dll $(ConnectionStrings__TestTemplate1Db_Migrations_Connection) $(DB_USER) $(DB_PASSWORD)
           displayName: 'Migrate database'
 
         - task: AzureWebApp@1
