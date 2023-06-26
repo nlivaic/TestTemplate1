@@ -63,6 +63,14 @@ jobs:
             project: 'TestTemplate1_ADO_Project'
             downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.Migrations'
 
+
+        - script: echo $(ConnectionStrings.TestTemplate1Db_Migrations_Connection)
+        - script: echo $(DB_USER)
+        - script: echo $(DB_PASSWORD)
+
+        - script: dotnet $(Pipeline.Workspace)/drop/TestTemplate1.Migrations/TestTemplate1.Migrations.dll $(ConnectionStrings.TestTemplate1Db_Migrations_Connection) $(DB_USER) $(DB_PASSWORD)
+          displayName: 'Migrate database'
+
         - task: AzureWebApp@1
           displayName: 'Deploy TestTemplate1.Api to App Service'
           inputs:
