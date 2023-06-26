@@ -64,7 +64,7 @@ jobs:
             downloadPath: '$(Pipeline.Workspace)/drop/TestTemplate1.Migrations'
 
 
-        - script: echo $(ConnectionStrings.TestTemplate1Db_Migrations_Connection)
+        - script: echo $(ConnectionStrings__TestTemplate1Db_Migrations_Connection)
         - script: echo $(DB_USER)
         - script: echo $(DB_PASSWORD)
 
