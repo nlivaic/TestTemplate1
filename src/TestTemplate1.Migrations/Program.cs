@@ -24,6 +24,9 @@ namespace TestTemplate1.Migrations
 
             var config = builder.Build();
             InitializeParameters();
+            Console.WriteLine($"connectionString: {connectionString}.");
+            Console.WriteLine($"dbUser: {dbUser}.");
+            Console.WriteLine($"dbPassword: {dbPassword}.");
             var connectionStringTestTemplate1 = new SqlConnectionStringBuilder(connectionString)
             {
                 UserID = dbUser,
