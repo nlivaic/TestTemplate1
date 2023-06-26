@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using DbUp;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +10,10 @@ namespace TestTemplate1.Migrations
     {
         public static int Main(string[] args)
         {
+            var connectionString = string.Empty;
+            var dbUser = string.Empty;
+            var dbPassword = string.Empty;
+
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
                 ?? "Development";
             Console.WriteLine($"Environment: {env}.");
@@ -20,14 +23,11 @@ namespace TestTemplate1.Migrations
                 .AddEnvironmentVariables();
 
             var config = builder.Build();
-
-            var connectionStringTestTemplate1 = new SqlConnectionStringBuilder(
-                string.IsNullOrWhiteSpace(args.FirstOrDefault())
-                    ? config["ConnectionStrings:TestTemplate1Db_Migrations_Connection"]
-                    : args.FirstOrDefault())
+            InitializeParameters();
+            var connectionStringTestTemplate1 = new SqlConnectionStringBuilder(connectionString)
             {
-                UserID = config["DB_USER"],
-                Password = config["DB_PASSWORD"]
+                UserID = dbUser,
+                Password = dbPassword
             }.ConnectionString;
 
             string scriptsPath = null;
@@ -94,6 +94,22 @@ namespace TestTemplate1.Migrations
             Console.WriteLine("Success!");
             Console.ResetColor();
             return 0;
+
+            void InitializeParameters()
+            {
+                if (args.Length == 0)
+                {
+                    connectionString = config["ConnectionStrings:TestTemplate1Db_Migrations_Connection"];
+                    dbUser = config["DB_USER"];
+                    dbPassword = config["DB_PASSWORD"];
+                }
+                else if (args.Length == 3)
+                {
+                    connectionString = args[0];
+                    dbUser = args[1];
+                    dbPassword = args[2];
+                }
+            }
         }
     }
 }
