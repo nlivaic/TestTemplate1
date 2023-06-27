@@ -32,6 +32,7 @@ namespace TestTemplate1.Migrations
                 UserID = dbUser,
                 Password = dbPassword
             }.ConnectionString;
+            Console.WriteLine($"connectionStringTestTemplate1: {connectionStringTestTemplate1}.");
 
             string scriptsPath = null;
             if (args.Length == 3)
