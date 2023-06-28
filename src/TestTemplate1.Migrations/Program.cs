@@ -24,29 +24,16 @@ namespace TestTemplate1.Migrations
 
             var config = builder.Build();
             InitializeParameters();
-            Console.WriteLine($"connectionString: {connectionString}.");
-            Console.WriteLine($"dbUser: {dbUser}.");
-            Console.WriteLine($"dbPassword: {dbPassword}.");
             var connectionStringTestTemplate1 = new SqlConnectionStringBuilder(connectionString)
             {
                 UserID = dbUser,
                 Password = dbPassword
             }.ConnectionString;
-            Console.WriteLine($"connectionStringTestTemplate1: {connectionStringTestTemplate1}.");
-
-            string scriptsPath = null;
-            if (args.Length == 3)
-            {
-                scriptsPath = args[2];
-            }
 
             var upgraderTestTemplate1 =
                 DeployChanges.To
                     .SqlDatabase(connectionStringTestTemplate1)
-                    .WithScriptsFromFileSystem(
-                        !string.IsNullOrWhiteSpace(scriptsPath)
-                                ? Path.Combine(scriptsPath, "TestTemplate1Scripts")
-                            : Path.Combine(Environment.CurrentDirectory, "TestTemplate1Scripts"))
+                    .WithScriptsFromFileSystem(Path.Combine(Environment.CurrentDirectory, "TestTemplate1Scripts"))
                     .LogToConsole()
                     .Build();
             Console.WriteLine($"Now upgrading TestTemplate1.");
