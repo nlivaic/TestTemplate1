@@ -13,6 +13,7 @@ namespace TestTemplate1.Migrations
             var connectionString = string.Empty;
             var dbUser = string.Empty;
             var dbPassword = string.Empty;
+            var scriptsPath = string.Empty;
 
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
                 ?? "Development";
@@ -33,7 +34,10 @@ namespace TestTemplate1.Migrations
             var upgraderTestTemplate1 =
                 DeployChanges.To
                     .SqlDatabase(connectionStringTestTemplate1)
-                    .WithScriptsFromFileSystem(Path.Combine(Environment.CurrentDirectory, "TestTemplate1Scripts"))
+                    .WithScriptsFromFileSystem(
+                        !string.IsNullOrWhiteSpace(scriptsPath)
+                                ? Path.Combine(scriptsPath, "TestTemplate1Scripts")
+                            : Path.Combine(Environment.CurrentDirectory, "TestTemplate1Scripts"))
                     .LogToConsole()
                     .Build();
             Console.WriteLine($"Now upgrading TestTemplate1.");
@@ -94,11 +98,12 @@ namespace TestTemplate1.Migrations
                     dbUser = config["DB_USER"];
                     dbPassword = config["DB_PASSWORD"];
                 }
-                else if (args.Length == 3)
+                else if (args.Length == 4)
                 {
                     connectionString = args[0];
                     dbUser = args[1];
                     dbPassword = args[2];
+                    scriptsPath = args[3];
                 }
             }
         }
