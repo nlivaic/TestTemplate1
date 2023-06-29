@@ -33,6 +33,16 @@ jobs:
 
         - download: none
 
+        - task: AzureKeyVault@2
+          inputs:
+            azureSubscription: 'AzureConnection_TestTemplate1'
+            KeyVaultName: 'WE-TEST1-KV1'
+            SecretsFilter: '*'
+            RunAsPreJob: false
+
+        - script: echo $(fromkv)
+          displayName: 'Echo variable from Key Vault'
+
         - task: DownloadPipelineArtifact@2
           displayName: 'Download Artifact TestTemplate1.Api'
           inputs:
